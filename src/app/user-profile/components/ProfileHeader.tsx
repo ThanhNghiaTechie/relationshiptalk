@@ -33,7 +33,7 @@ interface ProfileHeaderProps {
       {/* Profile info */}
       <div className="px-4 lg:px-6 pb-4">
         {/* Avatar row */}
-        <div className="flex items-end justify-between -mt-10 mb-3">
+        <div className="flex items-end justify-between gap-2 -mt-10 mb-3">
           <div className="profile-avatar-ring w-20 h-20 flex-shrink-0">
             <div className="w-full h-full rounded-full overflow-hidden bg-muted border-4 border-card">
               <AppImage
@@ -47,12 +47,12 @@ interface ProfileHeaderProps {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex flex-wrap items-center justify-end gap-2 mb-1">
             {isOwnProfile ? (
               <>
                 <button
                   onClick={onEditProfile}
-                  className="btn-outline text-sm py-2 px-4 flex items-center gap-1.5"
+                  className="btn-outline text-xs py-2 px-3 flex items-center gap-1.5 sm:text-sm sm:px-4"
                 >
                   <Icon name="PencilIcon" size={14} variant="outline" />
                   Edit Profile

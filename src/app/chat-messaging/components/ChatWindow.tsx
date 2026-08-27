@@ -73,8 +73,8 @@ export default function ChatWindow({ conversation, onBack }: ChatWindowProps) {
 
         {/* Name & status */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-700 text-foreground truncate">
+          <div className="flex min-w-0 items-center gap-2">
+            <span className="min-w-0 truncate text-sm font-700 text-foreground">
               {conversation.participant.name}
             </span>
             <RoleBadge role={conversation.participant.role} />
@@ -91,7 +91,7 @@ export default function ChatWindow({ conversation, onBack }: ChatWindowProps) {
         {/* Actions */}
         <div className="flex items-center gap-1">
           {conversation.participant.role === 'Expert' && (
-            <button className="btn-outline text-xs py-1.5 px-3 rounded-lg">
+            <button className="btn-outline hidden text-xs py-1.5 px-3 rounded-lg sm:block">
               Book Session
             </button>
           )}

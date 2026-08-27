@@ -17,8 +17,8 @@ interface BottomNavProps {
 
 export default function BottomNav({ activeRoute }: BottomNavProps) {
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-card border-t border-border shadow-bottom-nav z-40">
-      <div className="flex items-center justify-around px-2 py-1">
+    <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-card border-t border-border shadow-bottom-nav z-40 pb-[env(safe-area-inset-bottom)]">
+      <div className="flex items-center justify-around px-1 py-1 sm:px-2">
         {navItems.map((item) => {
           const isActive =
             item.href === '/'

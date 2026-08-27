@@ -19,7 +19,7 @@ export default function TopHeader({ activeRoute }: TopHeaderProps) {
   const title = routeTitles[activeRoute] ?? 'COMMUNITY';
 
   return (
-    <header className="sticky top-0 z-30 bg-card/95 backdrop-blur-sm border-b border-border px-4 py-3 flex items-center justify-between lg:hidden">
+    <header className="sticky top-0 z-30 bg-card/95 backdrop-blur-sm border-b border-border px-3 py-2.5 sm:px-4 sm:py-3 flex items-center justify-between lg:hidden">
       {/* Left: avatar */}
       <Link href="/login" className="profile-avatar-ring w-9 h-9 flex-shrink-0" aria-label="Đăng nhập">
         <div className="w-full h-full rounded-full bg-muted overflow-hidden flex items-center justify-center">
@@ -28,7 +28,7 @@ export default function TopHeader({ activeRoute }: TopHeaderProps) {
       </Link>
 
       {/* Center: title */}
-      <h1 className="text-base font-800 tracking-widest text-foreground uppercase">
+      <h1 className="min-w-0 truncate px-2 text-sm font-800 tracking-widest text-foreground uppercase sm:text-base">
         {title}
       </h1>
 

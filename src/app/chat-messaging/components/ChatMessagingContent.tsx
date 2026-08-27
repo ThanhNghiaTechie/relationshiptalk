@@ -10,7 +10,7 @@ export default function ChatMessagingContent() {
   const activeConv = mockConversations?.find((c) => c?.id === activeConvId) ?? mockConversations?.[0];
 
   return (
-    <div className="flex h-[calc(100vh-64px)] lg:h-[calc(100vh-0px)] overflow-hidden">
+    <div className="flex h-[calc(100dvh-60px)] min-h-0 overflow-hidden lg:h-[calc(100dvh-0px)]">
       {/* Conversation list */}
       <div
         className={`w-full lg:w-80 xl:w-96 flex-shrink-0 border-r border-border bg-card flex flex-col ${
