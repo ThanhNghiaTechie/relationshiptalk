@@ -128,6 +128,13 @@ export default function Sidebar({ activeRoute }: SidebarProps) {
             </Link>
           );
         })}
+        <Link
+          href="/login"
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground transition-all duration-150 ${collapsed ? 'justify-center' : ''}`}
+        >
+          <Icon name="ArrowRightOnRectangleIcon" size={20} variant="outline" />
+          {!collapsed && <span className="text-sm font-500">Đăng nhập</span>}
+        </Link>
       </div>
 
       {/* Collapse toggle */}
