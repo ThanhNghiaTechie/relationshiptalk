@@ -1,12 +1,46 @@
-import Link from 'next/link';
-import { login, loginWithGoogle } from './actions';
+ 'use client';
 
-export default async function LoginPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ error?: string; message?: string }>;
-}) {
-  const { error, message } = await searchParams;
+import Link from 'next/link';
+import { Eye, EyeOff } from 'lucide-react';
+import { FormEvent, useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
+
+export default function LoginPage() {
+  const supabase = createClient();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError('');
+    setMessage('');
+    if (!email.trim()) return setError('Vui lòng nhập email.');
+    if (!/^\S+@\S+\.\S+$/.test(email)) return setError('Email không hợp lệ.');
+    if (!password) return setError('Vui lòng nhập mật khẩu.');
+
+    setIsLoading(true);
+    const { error: signInError } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    if (signInError) {
+      setError('Email hoặc mật khẩu không đúng.');
+      setIsLoading(false);
+      return;
+    }
+    window.location.assign('/');
+  }
+
+  async function handleGoogleLogin() {
+    setError('');
+    const { data, error: oauthError } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
+    });
+    if (oauthError) setError('Không thể đăng nhập bằng Google. Vui lòng thử lại.');
+    else if (data.url) window.location.assign(data.url);
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
@@ -23,18 +57,7 @@ export default async function LoginPage({
           </Link>
         </div>
 
-        {error && (
-          <p className="mb-4 rounded-md bg-red-50 px-3 py-2 text-sm text-red-600">
-            {error}
-          </p>
-        )}
-        {message && (
-          <p className="mb-4 rounded-md bg-green-50 px-3 py-2 text-sm text-green-700">
-            {message}
-          </p>
-        )}
-
-        <form action={login} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="email" className="mb-1 block text-sm text-muted-foreground">
               Email
@@ -44,7 +67,9 @@ export default async function LoginPage({
               name="email"
               type="email"
               required
-              placeholder="name@company.com"
+              placeholder="Nhập email của bạn"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
               className="w-full rounded-md border border-border px-3 py-2 text-sm"
             />
           </div>
@@ -53,21 +78,26 @@ export default async function LoginPage({
             <label htmlFor="password" className="mb-1 block text-sm text-muted-foreground">
               Mật khẩu
             </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              placeholder="••••••••"
-              className="w-full rounded-md border border-border px-3 py-2 text-sm"
-            />
+            <div className="relative">
+              <input id="password" name="password" type={showPassword ? 'text' : 'password'} required placeholder="Nhập mật khẩu" value={password} onChange={(event) => setPassword(event.target.value)} className="w-full rounded-md border border-border px-3 py-2 pr-10 text-sm" />
+              <button type="button" aria-label={showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'} onClick={() => setShowPassword((visible) => !visible)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground">
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+            <div className="mt-2 text-right">
+              <Link href="/forgot-password" className="text-sm text-primary hover:underline">Quên mật khẩu?</Link>
+            </div>
           </div>
+
+          {error && <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>}
+          {message && <p className="rounded-md bg-green-50 px-3 py-2 text-sm text-green-700">{message}</p>}
 
           <button
             type="submit"
+            disabled={isLoading}
             className="w-full rounded-md bg-primary py-2.5 text-sm font-medium text-primary-foreground"
           >
-            Đăng nhập
+            {isLoading ? 'Đang đăng nhập...' : 'Đăng nhập'}
           </button>
         </form>
 
@@ -77,7 +107,7 @@ export default async function LoginPage({
           <div className="h-px flex-1 bg-border" />
         </div>
 
-        <form action={loginWithGoogle}>
+        <form onSubmit={(event) => { event.preventDefault(); void handleGoogleLogin(); }}>
           <button
             type="submit"
             className="w-full rounded-md border border-border py-2.5 text-sm font-medium"
