@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import Icon from '@/components/ui/AppIcon';
 import CreatePostModal from './CreatePostModal';
+import type { Post } from '../data/mockPosts';
 
-export default function CreatePostButton() {
+export default function CreatePostButton({ onCreated }: { onCreated: (post: Post) => void }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -27,7 +28,7 @@ export default function CreatePostButton() {
         </button>
       </div>
 
-      {open && <CreatePostModal onClose={() => setOpen(false)} />}
+      {open && <CreatePostModal onClose={() => setOpen(false)} onCreated={onCreated} />}
     </>
   );
 }

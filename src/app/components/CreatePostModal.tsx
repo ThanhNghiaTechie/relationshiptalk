@@ -3,9 +3,13 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import Icon from '@/components/ui/AppIcon';
+import { createClient } from '@/lib/supabase/client';
+import { mapPostRow, postSelect } from '@/lib/posts';
+import { getProfileMetadata } from '@/lib/profile';
 
 interface CreatePostModalProps {
   onClose: () => void;
+  onCreated: (post: import('@/app/data/mockPosts').Post) => void;
 }
 
 interface PostFormValues {
@@ -26,9 +30,10 @@ const topics = [
   'Boundaries',
 ];
 
-export default function CreatePostModal({ onClose }: CreatePostModalProps) {
+export default function CreatePostModal({ onClose, onCreated }: CreatePostModalProps) {
   const [selectedTopic, setSelectedTopic] = useState('Relationship Advice');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const supabase = createClient();
 
   const {
     register,
@@ -42,12 +47,72 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
 
   const isAnonymous = watch('isAnonymous');
 
-  const onSubmit = async () => {
+  const onSubmit = async (values: PostFormValues) => {
     setIsSubmitting(true);
-    // Backend integration point: POST /api/posts
-    await new Promise((r) => setTimeout(r, 1200));
+    const { data: authData, error: authError } = await supabase.auth.getUser();
+    if (authError || !authData.user) {
+      setIsSubmitting(false);
+      toast.error('Bạn cần đăng nhập để đăng bài.');
+      return;
+    }
+
+    const metadata = getProfileMetadata(authData.user.user_metadata);
+    const { data: existingProfile, error: profileLookupError } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('id', authData.user.id)
+      .maybeSingle();
+
+    if (profileLookupError) {
+      if (process.env.NODE_ENV !== 'production') console.error('Create post profile lookup error:', profileLookupError);
+      setIsSubmitting(false);
+      toast.error('Không thể xác thực hồ sơ. Vui lòng thử lại.');
+      return;
+    }
+
+    if (!existingProfile) {
+      const { error: profileError } = await supabase.from('profiles').insert({
+        id: authData.user.id,
+        username: metadata.username || null,
+        display_name: metadata.full_name || authData.user.email?.split('@')[0] || 'Người dùng',
+        avatar_url: metadata.avatar_url || null,
+      });
+      if (profileError) {
+        if (process.env.NODE_ENV !== 'production') console.error('Create post profile error:', profileError);
+        setIsSubmitting(false);
+        toast.error('Không thể tạo hồ sơ người dùng. Vui lòng thử lại.');
+        return;
+      }
+    }
+
+    const { data: category } = await supabase
+      .from('categories')
+      .select('id')
+      .eq('name', values.topic)
+      .maybeSingle();
+
+    const { data: row, error: postError } = await supabase
+      .from('posts')
+      .insert({
+        user_id: authData.user.id,
+        category_id: category?.id ?? null,
+        title: values.title.trim(),
+        content: values.body.trim(),
+        is_anonymous: values.isAnonymous,
+      })
+      .select(postSelect)
+      .single();
+
+    if (postError || !row) {
+      if (process.env.NODE_ENV !== 'production') console.error('Create post error:', postError);
+      setIsSubmitting(false);
+      toast.error('Không thể đăng bài. Vui lòng thử lại.');
+      return;
+    }
+
+    onCreated(mapPostRow(row));
     setIsSubmitting(false);
-    toast.success('Your post has been shared with the community!');
+    toast.success('Đăng bài thành công');
     onClose();
   };
 

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FeedTabBar from './FeedTabBar';
 import TopicFilterChips from './TopicFilterChips';
 import PostCard from './PostCard';
@@ -7,18 +7,48 @@ import ExpertsPanel from './ExpertsPanel';
 import GroupsPanel from './GroupsPanel';
 import CreatePostButton from './CreatePostButton';
 import TrendingSidebar from './TrendingSidebar';
-import { mockPosts } from '../data/mockPosts';
+import type { Post } from '../data/mockPosts';
+import { createClient } from '@/lib/supabase/client';
+import { mapPostRow, postSelect } from '@/lib/posts';
 
 export type FeedTab = 'Feed' | 'Experts' | 'Groups';
 
 export default function CommunityFeedContent() {
   const [activeTab, setActiveTab] = useState<FeedTab>('Feed');
   const [activeTopic, setActiveTopic] = useState<string>('All');
-  const [likedPosts, setLikedPosts] = useState<Set<string>>(new Set(['post-003']));
-  const [savedPosts, setSavedPosts] = useState<Set<string>>(new Set(['post-001']));
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [likedPosts, setLikedPosts] = useState<Set<string>>(new Set());
+  const [savedPosts, setSavedPosts] = useState<Set<string>>(new Set());
+  const [supabase] = useState(() => createClient());
+
+  useEffect(() => {
+    let mounted = true;
+    void supabase
+      .from('posts')
+      .select(postSelect)
+      .order('created_at', { ascending: false })
+      .limit(50)
+      .then(({ data, error: fetchError }) => {
+        if (!mounted) return;
+        if (fetchError) {
+          if (process.env.NODE_ENV !== 'production') console.error('Fetch posts error:', fetchError);
+          setError('Không thể tải bài viết. Vui lòng thử lại.');
+        } else {
+          setPosts((data || []).map(mapPostRow));
+        }
+        setIsLoading(false);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, [supabase]);
 
   const filteredPosts =
-    activeTopic === 'All' ? mockPosts : mockPosts.filter((p) => p.topic === activeTopic);
+    activeTopic === 'All' ? posts : posts.filter((p) => p.topic === activeTopic);
+
+  const handleCreated = (post: Post) => setPosts((current) => [post, ...current]);
 
   const handleLike = (postId: string) => {
     setLikedPosts((prev) => {
@@ -54,7 +84,11 @@ export default function CommunityFeedContent() {
         <div className="fade-in">
           {activeTab === 'Feed' && (
             <div className="px-4 lg:px-0 pb-4 space-y-4 pt-4">
-              {filteredPosts.length === 0 ? (
+              {isLoading ? (
+                <p className="py-20 text-center text-sm text-muted-foreground">Đang tải bài viết...</p>
+              ) : error ? (
+                <p className="py-20 text-center text-sm text-red-600">{error}</p>
+              ) : filteredPosts.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20 text-center">
                   <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
                     <span className="text-3xl">💬</span>
@@ -94,7 +128,7 @@ export default function CommunityFeedContent() {
       </div>
 
       {/* Floating create button (mobile) */}
-      <CreatePostButton />
+      <CreatePostButton onCreated={handleCreated} />
     </div>
   );
 }
