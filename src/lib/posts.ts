@@ -11,18 +11,24 @@ interface PostRow {
   likes_count: number | null;
   comments_count: number | null;
   created_at: string | null;
-  profiles?: {
-    id: string;
-    username: string | null;
-    display_name: string | null;
-    avatar_url: string | null;
-  } | {
-    id: string;
-    username: string | null;
-    display_name: string | null;
-    avatar_url: string | null;
-  }[] | null;
-  categories?: { id: number; name: string; slug: string } | { id: number; name: string; slug: string }[] | null;
+  profiles?:
+    | {
+        id: string;
+        username: string | null;
+        display_name: string | null;
+        avatar_url: string | null;
+      }
+    | {
+        id: string;
+        username: string | null;
+        display_name: string | null;
+        avatar_url: string | null;
+      }[]
+    | null;
+  categories?:
+    | { id: number; name: string; slug: string }
+    | { id: number; name: string; slug: string }[]
+    | null;
 }
 
 export function mapPostRow(row: PostRow): Post {

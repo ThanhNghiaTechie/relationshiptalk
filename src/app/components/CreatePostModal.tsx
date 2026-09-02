@@ -57,33 +57,6 @@ export default function CreatePostModal({ onClose, onCreated }: CreatePostModalP
     }
 
     const metadata = getProfileMetadata(authData.user.user_metadata);
-    const { data: existingProfile, error: profileLookupError } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('id', authData.user.id)
-      .maybeSingle();
-
-    if (profileLookupError) {
-      if (process.env.NODE_ENV !== 'production') console.error('Create post profile lookup error:', profileLookupError);
-      setIsSubmitting(false);
-      toast.error('Không thể xác thực hồ sơ. Vui lòng thử lại.');
-      return;
-    }
-
-    if (!existingProfile) {
-      const { error: profileError } = await supabase.from('profiles').insert({
-        id: authData.user.id,
-        username: metadata.username || null,
-        display_name: metadata.full_name || authData.user.email?.split('@')[0] || 'Người dùng',
-        avatar_url: metadata.avatar_url || null,
-      });
-      if (profileError) {
-        if (process.env.NODE_ENV !== 'production') console.error('Create post profile error:', profileError);
-        setIsSubmitting(false);
-        toast.error('Không thể tạo hồ sơ người dùng. Vui lòng thử lại.');
-        return;
-      }
-    }
 
     const { data: category } = await supabase
       .from('categories')
@@ -91,17 +64,41 @@ export default function CreatePostModal({ onClose, onCreated }: CreatePostModalP
       .eq('name', values.topic)
       .maybeSingle();
 
-    const { data: row, error: postError } = await supabase
+    const postValues = {
+      user_id: authData.user.id,
+      category_id: category?.id ?? null,
+      title: values.title.trim(),
+      content: values.body.trim(),
+      is_anonymous: values.isAnonymous,
+    };
+    let { data: row, error: postError } = await supabase
       .from('posts')
-      .insert({
-        user_id: authData.user.id,
-        category_id: category?.id ?? null,
-        title: values.title.trim(),
-        content: values.body.trim(),
-        is_anonymous: values.isAnonymous,
-      })
+      .insert(postValues)
       .select(postSelect)
       .single();
+
+    if (postError?.code === '23503') {
+      const { error: profileError } = await supabase.from('profiles').insert({
+        id: authData.user.id,
+        username: metadata.username || null,
+        display_name: metadata.full_name || authData.user.email?.split('@')[0] || 'Người dùng',
+        avatar_url: metadata.avatar_url || null,
+      });
+
+      if (profileError && profileError.code !== '23505') {
+        if (process.env.NODE_ENV !== 'production')
+          console.error('Create post profile error:', profileError);
+        setIsSubmitting(false);
+        toast.error('Không thể tạo hồ sơ người dùng. Vui lòng kiểm tra quyền Supabase.');
+        return;
+      }
+
+      ({ data: row, error: postError } = await supabase
+        .from('posts')
+        .insert(postValues)
+        .select(postSelect)
+        .single());
+    }
 
     if (postError || !row) {
       if (process.env.NODE_ENV !== 'production') console.error('Create post error:', postError);

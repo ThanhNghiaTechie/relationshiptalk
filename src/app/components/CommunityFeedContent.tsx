@@ -33,7 +33,8 @@ export default function CommunityFeedContent() {
       .then(({ data, error: fetchError }) => {
         if (!mounted) return;
         if (fetchError) {
-          if (process.env.NODE_ENV !== 'production') console.error('Fetch posts error:', fetchError);
+          if (process.env.NODE_ENV !== 'production')
+            console.error('Fetch posts error:', fetchError);
           setError('Không thể tải bài viết. Vui lòng thử lại.');
         } else {
           setPosts((data || []).map(mapPostRow));
@@ -85,7 +86,9 @@ export default function CommunityFeedContent() {
           {activeTab === 'Feed' && (
             <div className="px-4 lg:px-0 pb-4 space-y-4 pt-4">
               {isLoading ? (
-                <p className="py-20 text-center text-sm text-muted-foreground">Đang tải bài viết...</p>
+                <p className="py-20 text-center text-sm text-muted-foreground">
+                  Đang tải bài viết...
+                </p>
               ) : error ? (
                 <p className="py-20 text-center text-sm text-red-600">{error}</p>
               ) : filteredPosts.length === 0 ? (
