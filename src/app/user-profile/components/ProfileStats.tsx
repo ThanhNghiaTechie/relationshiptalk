@@ -22,9 +22,7 @@ export default function ProfileStats({ user }: ProfileStatsProps) {
           }`}
         >
           <p className="text-lg font-800 text-foreground tabular-nums">
-            {stat.value >= 1000
-              ? `${(stat.value / 1000).toFixed(1)}K`
-              : stat.value}
+            {stat.value >= 1000 ? `${(stat.value / 1000).toFixed(1)}K` : stat.value}
           </p>
           <p className="text-xs text-muted-foreground font-500 mt-0.5">{stat.label}</p>
         </div>

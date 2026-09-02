@@ -19,7 +19,8 @@ export default function FeedTabBar({ activeTab, onTabChange }: FeedTabBarProps) 
             onClick={() => onTabChange(tab)}
             className={`relative flex-1 lg:flex-none lg:px-8 py-4 text-sm font-600 transition-all duration-150 ${
               activeTab === tab
-                ? 'text-primary tab-underline' :'text-muted-foreground hover:text-foreground'
+                ? 'text-primary tab-underline'
+                : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             {tab}

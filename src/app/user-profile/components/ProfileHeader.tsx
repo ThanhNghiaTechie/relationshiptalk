@@ -10,7 +10,13 @@ interface ProfileHeaderProps {
   isFollowing: boolean;
   onFollowToggle: () => void;
   onEditProfile: () => void;
-}export default function ProfileHeader({ user, isFollowing, onFollowToggle, onEditProfile }: ProfileHeaderProps) {
+}
+export default function ProfileHeader({
+  user,
+  isFollowing,
+  onFollowToggle,
+  onEditProfile,
+}: ProfileHeaderProps) {
   const isOwnProfile = true; // In real app: compare with auth user id
 
   return (

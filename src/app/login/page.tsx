@@ -1,4 +1,4 @@
- 'use client';
+'use client';
 
 import Link from 'next/link';
 import { Eye, EyeOff } from 'lucide-react';
@@ -23,7 +23,10 @@ export default function LoginPage() {
     if (!password) return setError('Vui lòng nhập mật khẩu.');
 
     setIsLoading(true);
-    const { error: signInError } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+    });
     if (signInError) {
       setError('Email hoặc mật khẩu không đúng.');
       setIsLoading(false);
@@ -79,18 +82,36 @@ export default function LoginPage() {
               Mật khẩu
             </label>
             <div className="relative">
-              <input id="password" name="password" type={showPassword ? 'text' : 'password'} required placeholder="Nhập mật khẩu" value={password} onChange={(event) => setPassword(event.target.value)} className="w-full rounded-md border border-border px-3 py-2 pr-10 text-sm" />
-              <button type="button" aria-label={showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'} onClick={() => setShowPassword((visible) => !visible)} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                required
+                placeholder="Nhập mật khẩu"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                className="w-full rounded-md border border-border px-3 py-2 pr-10 text-sm"
+              />
+              <button
+                type="button"
+                aria-label={showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+                onClick={() => setShowPassword((visible) => !visible)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground"
+              >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
             <div className="mt-2 text-right">
-              <Link href="/forgot-password" className="text-sm text-primary hover:underline">Quên mật khẩu?</Link>
+              <Link href="/forgot-password" className="text-sm text-primary hover:underline">
+                Quên mật khẩu?
+              </Link>
             </div>
           </div>
 
           {error && <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>}
-          {message && <p className="rounded-md bg-green-50 px-3 py-2 text-sm text-green-700">{message}</p>}
+          {message && (
+            <p className="rounded-md bg-green-50 px-3 py-2 text-sm text-green-700">{message}</p>
+          )}
 
           <button
             type="submit"
@@ -107,7 +128,12 @@ export default function LoginPage() {
           <div className="h-px flex-1 bg-border" />
         </div>
 
-        <form onSubmit={(event) => { event.preventDefault(); void handleGoogleLogin(); }}>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            void handleGoogleLogin();
+          }}
+        >
           <button
             type="submit"
             className="w-full rounded-md border border-border py-2.5 text-sm font-medium"

@@ -42,5 +42,5 @@ export const mockProfileUser: ProfileUser = {
   postsCount: 0,
   followersCount: 0,
   followingCount: 0,
-  achievements: []
+  achievements: [],
 };

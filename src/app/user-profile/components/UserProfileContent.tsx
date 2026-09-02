@@ -123,7 +123,9 @@ function ProfileSidePanelStatic({ user }: { user: typeof mockProfileUser }) {
               title={ach.description}
             >
               <span className="text-xl">{ach.emoji}</span>
-              <span className="text-xs text-muted-foreground text-center leading-tight">{ach.label}</span>
+              <span className="text-xs text-muted-foreground text-center leading-tight">
+                {ach.label}
+              </span>
             </div>
           ))}
         </div>

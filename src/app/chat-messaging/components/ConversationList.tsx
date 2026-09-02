@@ -11,7 +11,11 @@ interface ConversationListProps {
   onSelect: (id: string) => void;
 }
 
-export default function ConversationList({ conversations, activeConvId, onSelect }: ConversationListProps) {
+export default function ConversationList({
+  conversations,
+  activeConvId,
+  onSelect,
+}: ConversationListProps) {
   const [search, setSearch] = useState('');
 
   const filtered = conversations.filter(
@@ -58,7 +62,12 @@ export default function ConversationList({ conversations, activeConvId, onSelect
       <div className="flex-1 overflow-y-auto scrollbar-hide">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center px-4">
-            <Icon name="ChatBubbleLeftRightIcon" size={36} variant="outline" className="text-muted-foreground mb-3" />
+            <Icon
+              name="ChatBubbleLeftRightIcon"
+              size={36}
+              variant="outline"
+              className="text-muted-foreground mb-3"
+            />
             <p className="text-sm font-600 text-foreground">No conversations found</p>
             <p className="text-xs text-muted-foreground mt-1">Try a different search term</p>
           </div>
@@ -69,7 +78,8 @@ export default function ConversationList({ conversations, activeConvId, onSelect
               onClick={() => onSelect(conv.id)}
               className={`w-full flex items-start gap-3 px-4 py-3.5 transition-all duration-150 border-b border-border/50 text-left ${
                 activeConvId === conv.id
-                  ? 'bg-primary/8 border-l-2 border-l-primary' :'hover:bg-muted/50'
+                  ? 'bg-primary/8 border-l-2 border-l-primary'
+                  : 'hover:bg-muted/50'
               }`}
             >
               {/* Avatar */}

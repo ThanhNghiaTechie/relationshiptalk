@@ -21,7 +21,9 @@ export default function RoleBadge({ role, size = 'sm' }: RoleBadgeProps) {
   };
 
   return (
-    <span className={`${classMap[role]} inline-flex items-center gap-1 ${size === 'md' ? 'text-xs px-3 py-1' : ''}`}>
+    <span
+      className={`${classMap[role]} inline-flex items-center gap-1 ${size === 'md' ? 'text-xs px-3 py-1' : ''}`}
+    >
       <span>{iconMap[role]}</span>
       {role}
     </span>

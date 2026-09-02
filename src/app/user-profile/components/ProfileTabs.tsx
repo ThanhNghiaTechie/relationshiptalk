@@ -18,7 +18,8 @@ export default function ProfileTabs({ activeTab, onTabChange }: ProfileTabsProps
           onClick={() => onTabChange(tab)}
           className={`flex-1 py-3.5 text-sm font-600 transition-all duration-150 relative ${
             activeTab === tab
-              ? 'text-primary tab-underline' :'text-muted-foreground hover:text-foreground'
+              ? 'text-primary tab-underline'
+              : 'text-muted-foreground hover:text-foreground'
           }`}
         >
           {tab}

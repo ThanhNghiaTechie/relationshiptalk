@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import Icon from '@/components/ui/AppIcon';
 
-
 interface CreatePostModalProps {
   onClose: () => void;
 }
@@ -16,7 +15,16 @@ interface PostFormValues {
   isAnonymous: boolean;
 }
 
-const topics = ['Relationship Advice', 'Dating', 'Breakups', 'Family', 'Self-Love', 'Long Distance', 'Communication', 'Boundaries'];
+const topics = [
+  'Relationship Advice',
+  'Dating',
+  'Breakups',
+  'Family',
+  'Self-Love',
+  'Long Distance',
+  'Communication',
+  'Boundaries',
+];
 
 export default function CreatePostModal({ onClose }: CreatePostModalProps) {
   const [selectedTopic, setSelectedTopic] = useState('Relationship Advice');
@@ -65,7 +73,7 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
           <div className="flex items-center justify-between bg-muted/50 rounded-xl px-4 py-3">
             <div>
               <p className="text-sm font-600 text-foreground">Post Anonymously</p>
-              <p className="text-xs text-muted-foreground">Your name won't be shown</p>
+              <p className="text-xs text-muted-foreground">Your name won&apos;t be shown</p>
             </div>
             <button
               type="button"
@@ -92,7 +100,10 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
                 <button
                   key={`modal-topic-${topic}`}
                   type="button"
-                  onClick={() => { setSelectedTopic(topic); setValue('topic', topic); }}
+                  onClick={() => {
+                    setSelectedTopic(topic);
+                    setValue('topic', topic);
+                  }}
                   className={`topic-chip text-xs py-1.5 ${selectedTopic === topic ? 'topic-chip-active' : ''}`}
                 >
                   {topic}
@@ -112,9 +123,7 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
               placeholder="What's on your mind?"
               className="w-full bg-input border border-border rounded-xl px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
             />
-            {errors.title && (
-              <p className="text-xs text-red-500 mt-1">{errors.title.message}</p>
-            )}
+            {errors.title && <p className="text-xs text-red-500 mt-1">{errors.title.message}</p>}
           </div>
 
           {/* Body */}
@@ -131,18 +140,12 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
               placeholder="Share your experience, ask a question, or seek advice from the community..."
               className="w-full bg-input border border-border rounded-xl px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all resize-none"
             />
-            {errors.body && (
-              <p className="text-xs text-red-500 mt-1">{errors.body.message}</p>
-            )}
+            {errors.body && <p className="text-xs text-red-500 mt-1">{errors.body.message}</p>}
           </div>
 
           {/* Actions */}
           <div className="flex gap-3 pt-1">
-            <button
-              type="button"
-              onClick={onClose}
-              className="btn-outline flex-1"
-            >
+            <button type="button" onClick={onClose} className="btn-outline flex-1">
               Cancel
             </button>
             <button

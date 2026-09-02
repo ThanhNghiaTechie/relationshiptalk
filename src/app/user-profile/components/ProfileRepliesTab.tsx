@@ -13,7 +13,12 @@ export default function ProfileRepliesTab({ userId }: ProfileRepliesTabProps) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center px-8">
         <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
-          <Icon name="ChatBubbleOvalLeftIcon" size={28} variant="outline" className="text-muted-foreground" />
+          <Icon
+            name="ChatBubbleOvalLeftIcon"
+            size={28}
+            variant="outline"
+            className="text-muted-foreground"
+          />
         </div>
         <h3 className="text-base font-700 text-foreground mb-1">No replies yet</h3>
         <p className="text-sm text-muted-foreground">
@@ -26,7 +31,10 @@ export default function ProfileRepliesTab({ userId }: ProfileRepliesTabProps) {
   return (
     <div className="divide-y divide-border">
       {mockProfileReplies.map((reply) => (
-        <div key={`profile-reply-${reply.id}`} className="px-4 lg:px-6 py-4 hover:bg-muted/30 transition-all duration-150">
+        <div
+          key={`profile-reply-${reply.id}`}
+          className="px-4 lg:px-6 py-4 hover:bg-muted/30 transition-all duration-150"
+        >
           {/* Original post context */}
           <div className="flex items-center gap-2 mb-2 text-xs text-muted-foreground">
             <Icon name="ArrowUturnLeftIcon" size={12} variant="outline" />

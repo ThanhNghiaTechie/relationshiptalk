@@ -18,9 +18,7 @@ export default function CommunityFeedContent() {
   const [savedPosts, setSavedPosts] = useState<Set<string>>(new Set(['post-001']));
 
   const filteredPosts =
-    activeTopic === 'All'
-      ? mockPosts
-      : mockPosts.filter((p) => p.topic === activeTopic);
+    activeTopic === 'All' ? mockPosts : mockPosts.filter((p) => p.topic === activeTopic);
 
   const handleLike = (postId: string) => {
     setLikedPosts((prev) => {
@@ -65,7 +63,8 @@ export default function CommunityFeedContent() {
                     No posts in {activeTopic} yet
                   </h3>
                   <p className="text-sm text-muted-foreground max-w-xs">
-                    Be the first to start a conversation in this topic. Your question might help someone else too.
+                    Be the first to start a conversation in this topic. Your question might help
+                    someone else too.
                   </p>
                   <button className="btn-primary mt-4">Start a Discussion</button>
                 </div>

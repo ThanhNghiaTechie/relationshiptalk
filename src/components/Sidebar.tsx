@@ -31,7 +31,9 @@ export default function Sidebar({ activeRoute }: SidebarProps) {
       }`}
     >
       {/* Logo */}
-      <div className={`flex items-center gap-3 px-4 py-5 border-b border-border ${collapsed ? 'justify-center' : ''}`}>
+      <div
+        className={`flex items-center gap-3 px-4 py-5 border-b border-border ${collapsed ? 'justify-center' : ''}`}
+      >
         <div className="flex items-center gap-2">
           <AppLogo size={36} />
           {!collapsed && (
@@ -51,16 +53,15 @@ export default function Sidebar({ activeRoute }: SidebarProps) {
         )}
         {navItems.map((item) => {
           const isActive =
-            item.href === '/'
-              ? activeRoute === '/'
-              : activeRoute.startsWith(item.href);
+            item.href === '/' ? activeRoute === '/' : activeRoute.startsWith(item.href);
           return (
             <Link
               key={`sidebar-nav-${item.label}`}
               href={item.href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 group relative ${
                 isActive
-                  ? 'bg-primary/10 text-primary' :'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
               } ${collapsed ? 'justify-center' : ''}`}
             >
               <Icon
@@ -104,7 +105,8 @@ export default function Sidebar({ activeRoute }: SidebarProps) {
               href={item.href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 group relative ${
                 isActive
-                  ? 'bg-primary/10 text-primary' :'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
               } ${collapsed ? 'justify-center' : ''}`}
             >
               <Icon
@@ -112,9 +114,7 @@ export default function Sidebar({ activeRoute }: SidebarProps) {
                 size={20}
                 variant="outline"
               />
-              {!collapsed && (
-                <span className="text-sm font-500">{item.label}</span>
-              )}
+              {!collapsed && <span className="text-sm font-500">{item.label}</span>}
               {item.badge && !collapsed && (
                 <span className="ml-auto bg-primary text-primary-foreground text-xs font-700 rounded-full px-2 py-0.5">
                   {item.badge}

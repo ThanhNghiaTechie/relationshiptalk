@@ -21,9 +21,7 @@ export default function BottomNav({ activeRoute }: BottomNavProps) {
       <div className="flex items-center justify-around px-1 py-1 sm:px-2">
         {navItems.map((item) => {
           const isActive =
-            item.href === '/'
-              ? activeRoute === '/'
-              : activeRoute.startsWith(item.href);
+            item.href === '/' ? activeRoute === '/' : activeRoute.startsWith(item.href);
           return (
             <Link
               key={`bottom-nav-${item.label}`}

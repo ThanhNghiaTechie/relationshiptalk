@@ -6,7 +6,7 @@ export interface Group {
   memberCount: number;
   postsToday: number;
   coverImage: string;
-  recentMembers: {name: string;avatar: string;}[];
+  recentMembers: { name: string; avatar: string }[];
 }
 
 export const mockGroups: Group[] = [];

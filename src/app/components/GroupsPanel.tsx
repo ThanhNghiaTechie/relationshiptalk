@@ -5,7 +5,9 @@ import Icon from '@/components/ui/AppIcon';
 import { mockGroups } from '../data/mockGroups';
 
 export default function GroupsPanel() {
-  const [joinedGroups, setJoinedGroups] = useState<Set<string>>(new Set(['group-002', 'group-004']));
+  const [joinedGroups, setJoinedGroups] = useState<Set<string>>(
+    new Set(['group-002', 'group-004'])
+  );
 
   const toggleJoin = (id: string) => {
     setJoinedGroups((prev) => {
@@ -56,13 +58,23 @@ export default function GroupsPanel() {
 
               <div className="flex items-center gap-3 mt-2">
                 <div className="flex items-center gap-1">
-                  <Icon name="UserGroupIcon" size={12} variant="outline" className="text-muted-foreground" />
+                  <Icon
+                    name="UserGroupIcon"
+                    size={12}
+                    variant="outline"
+                    className="text-muted-foreground"
+                  />
                   <span className="text-xs text-muted-foreground tabular-nums">
                     {group.memberCount.toLocaleString()} members
                   </span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Icon name="ChatBubbleLeftIcon" size={12} variant="outline" className="text-muted-foreground" />
+                  <Icon
+                    name="ChatBubbleLeftIcon"
+                    size={12}
+                    variant="outline"
+                    className="text-muted-foreground"
+                  />
                   <span className="text-xs text-muted-foreground tabular-nums">
                     {group.postsToday} posts today
                   </span>

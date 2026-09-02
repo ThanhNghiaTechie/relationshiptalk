@@ -21,7 +21,11 @@ export default function TopHeader({ activeRoute }: TopHeaderProps) {
   return (
     <header className="sticky top-0 z-30 bg-card/95 backdrop-blur-sm border-b border-border px-3 py-2.5 sm:px-4 sm:py-3 flex items-center justify-between lg:hidden">
       {/* Left: avatar */}
-      <Link href="/login" className="profile-avatar-ring w-9 h-9 flex-shrink-0" aria-label="Đăng nhập">
+      <Link
+        href="/login"
+        className="profile-avatar-ring w-9 h-9 flex-shrink-0"
+        aria-label="Đăng nhập"
+      >
         <div className="w-full h-full rounded-full bg-muted overflow-hidden flex items-center justify-center">
           <Icon name="UserCircleIcon" size={28} variant="solid" className="text-muted-foreground" />
         </div>
@@ -39,7 +43,12 @@ export default function TopHeader({ activeRoute }: TopHeaderProps) {
           onClick={() => setNotifOpen(!notifOpen)}
           aria-label="Messages"
         >
-          <Icon name="ChatBubbleOvalLeftEllipsisIcon" size={22} variant="outline" className="text-primary" />
+          <Icon
+            name="ChatBubbleOvalLeftEllipsisIcon"
+            size={22}
+            variant="outline"
+            className="text-primary"
+          />
           <span className="absolute top-1 right-1 bg-primary rounded-full w-2 h-2" />
         </button>
         <button

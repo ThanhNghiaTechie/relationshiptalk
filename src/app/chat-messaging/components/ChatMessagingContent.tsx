@@ -7,7 +7,8 @@ import { mockConversations } from '../data/mockConversations';
 export default function ChatMessagingContent() {
   const [activeConvId, setActiveConvId] = useState<string>('conv-001');
 
-  const activeConv = mockConversations?.find((c) => c?.id === activeConvId) ?? mockConversations?.[0];
+  const activeConv =
+    mockConversations?.find((c) => c?.id === activeConvId) ?? mockConversations?.[0];
 
   return (
     <div className="flex h-[calc(100dvh-60px)] min-h-0 overflow-hidden lg:h-[calc(100dvh-0px)]">
@@ -27,10 +28,7 @@ export default function ChatMessagingContent() {
       {/* Chat window */}
       <div className={`flex-1 flex flex-col min-w-0 ${activeConvId ? 'flex' : 'hidden lg:flex'}`}>
         {activeConv ? (
-          <ChatWindow
-            conversation={activeConv}
-            onBack={() => setActiveConvId('')}
-          />
+          <ChatWindow conversation={activeConv} onBack={() => setActiveConvId('')} />
         ) : (
           <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
             <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mb-4">

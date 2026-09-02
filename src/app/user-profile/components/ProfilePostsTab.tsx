@@ -26,7 +26,12 @@ export default function ProfilePostsTab({ userId }: ProfilePostsTabProps) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center px-8">
         <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
-          <Icon name="DocumentTextIcon" size={28} variant="outline" className="text-muted-foreground" />
+          <Icon
+            name="DocumentTextIcon"
+            size={28}
+            variant="outline"
+            className="text-muted-foreground"
+          />
         </div>
         <h3 className="text-base font-700 text-foreground mb-1">No posts yet</h3>
         <p className="text-sm text-muted-foreground">
@@ -39,11 +44,16 @@ export default function ProfilePostsTab({ userId }: ProfilePostsTabProps) {
   return (
     <div className="divide-y divide-border">
       {mockProfilePosts.map((post) => (
-        <article key={`profile-post-${post.id}`} className="px-4 lg:px-6 py-4 hover:bg-muted/30 transition-all duration-150">
+        <article
+          key={`profile-post-${post.id}`}
+          className="px-4 lg:px-6 py-4 hover:bg-muted/30 transition-all duration-150"
+        >
           {/* Post header */}
           <div className="flex items-start gap-2 mb-2">
             <TopicBadge topic={post.topic} />
-            <span className="text-xs text-muted-foreground ml-auto flex-shrink-0">{post.timeAgo}</span>
+            <span className="text-xs text-muted-foreground ml-auto flex-shrink-0">
+              {post.timeAgo}
+            </span>
           </div>
 
           {/* Post body */}
@@ -70,7 +80,9 @@ export default function ProfilePostsTab({ userId }: ProfilePostsTabProps) {
             <button
               onClick={() => toggleLike(post.id)}
               className={`flex items-center gap-1.5 text-sm transition-all duration-150 ${
-                likedPosts.has(post.id) ? 'text-primary' : 'text-muted-foreground hover:text-primary'
+                likedPosts.has(post.id)
+                  ? 'text-primary'
+                  : 'text-muted-foreground hover:text-primary'
               }`}
             >
               <Icon

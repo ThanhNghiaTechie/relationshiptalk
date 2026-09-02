@@ -65,7 +65,9 @@ export default function ExpertsPanel() {
                 <div className="flex items-center gap-1 mt-1">
                   <Icon name="StarIcon" size={12} variant="solid" className="text-amber-400" />
                   <span className="text-xs font-600 text-foreground">{expert.rating}</span>
-                  <span className="text-xs text-muted-foreground">({expert.reviewCount} reviews)</span>
+                  <span className="text-xs text-muted-foreground">
+                    ({expert.reviewCount} reviews)
+                  </span>
                   <span className="text-xs text-muted-foreground mx-1">·</span>
                   <span className="text-xs text-muted-foreground">{expert.yearsExp} yrs exp</span>
                 </div>
@@ -85,13 +87,23 @@ export default function ExpertsPanel() {
                 {/* Stats */}
                 <div className="flex items-center gap-4 mt-2.5">
                   <div className="flex items-center gap-1">
-                    <Icon name="UserGroupIcon" size={13} variant="outline" className="text-muted-foreground" />
+                    <Icon
+                      name="UserGroupIcon"
+                      size={13}
+                      variant="outline"
+                      className="text-muted-foreground"
+                    />
                     <span className="text-xs text-muted-foreground font-500 tabular-nums">
                       {expert.followers.toLocaleString()} followers
                     </span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Icon name="ChatBubbleLeftRightIcon" size={13} variant="outline" className="text-muted-foreground" />
+                    <Icon
+                      name="ChatBubbleLeftRightIcon"
+                      size={13}
+                      variant="outline"
+                      className="text-muted-foreground"
+                    />
                     <span className="text-xs text-muted-foreground font-500 tabular-nums">
                       {expert.postsCount} posts
                     </span>

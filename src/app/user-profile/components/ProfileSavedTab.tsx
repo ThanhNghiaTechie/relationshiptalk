@@ -24,7 +24,10 @@ export default function ProfileSavedTab() {
   return (
     <div className="divide-y divide-border">
       {mockSavedPosts?.map((post) => (
-        <article key={`saved-post-${post?.id}`} className="px-4 lg:px-6 py-4 hover:bg-muted/30 transition-all duration-150">
+        <article
+          key={`saved-post-${post?.id}`}
+          className="px-4 lg:px-6 py-4 hover:bg-muted/30 transition-all duration-150"
+        >
           <div className="flex items-start gap-3">
             {/* Author avatar */}
             <div className="w-8 h-8 rounded-full overflow-hidden bg-muted flex-shrink-0">
@@ -44,7 +47,9 @@ export default function ProfileSavedTab() {
                 <span className="text-xs text-muted-foreground ml-auto">{post?.timeAgo}</span>
               </div>
               {post?.title && (
-                <h3 className="text-sm font-700 text-foreground mb-1 leading-snug">{post?.title}</h3>
+                <h3 className="text-sm font-700 text-foreground mb-1 leading-snug">
+                  {post?.title}
+                </h3>
               )}
               <p className="text-sm text-foreground leading-relaxed line-clamp-2">{post?.body}</p>
               <div className="flex items-center gap-3 mt-2">

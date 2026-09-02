@@ -1,7 +1,16 @@
 'use client';
 import React from 'react';
 
-const topics = ['All', 'Relationship Advice', 'Dating', 'Breakups', 'Family', 'Self-Love', 'Long Distance', 'Communication'];
+const topics = [
+  'All',
+  'Relationship Advice',
+  'Dating',
+  'Breakups',
+  'Family',
+  'Self-Love',
+  'Long Distance',
+  'Communication',
+];
 
 interface TopicFilterChipsProps {
   activeTopic: string;

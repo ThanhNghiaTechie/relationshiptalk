@@ -53,7 +53,12 @@ export default function PostCard({ post, isLiked, isSaved, onLike, onSave }: Pos
           </div>
           <div className="flex items-center gap-1.5 mt-0.5">
             {post.author.role === 'Expert' && !post.isAnonymous && (
-              <Icon name="BookOpenIcon" size={12} variant="solid" className="text-expert-color opacity-60" />
+              <Icon
+                name="BookOpenIcon"
+                size={12}
+                variant="solid"
+                className="text-expert-color opacity-60"
+              />
             )}
             <span className="text-xs text-muted-foreground">{post.timeAgo}</span>
             {post.isAnonymous && (
@@ -70,13 +75,9 @@ export default function PostCard({ post, isLiked, isSaved, onLike, onSave }: Pos
       {/* Post body */}
       <div className="px-4 pb-3">
         {post.title && (
-          <h2 className="text-base font-700 text-foreground mb-1.5 leading-snug">
-            {post.title}
-          </h2>
+          <h2 className="text-base font-700 text-foreground mb-1.5 leading-snug">{post.title}</h2>
         )}
-        <p className="text-sm text-foreground leading-relaxed">
-          {post.body}
-        </p>
+        <p className="text-sm text-foreground leading-relaxed">{post.body}</p>
       </div>
 
       {/* Media image */}
@@ -129,11 +130,7 @@ export default function PostCard({ post, isLiked, isSaved, onLike, onSave }: Pos
               isSaved ? 'text-primary' : 'text-muted-foreground hover:text-primary'
             }`}
           >
-            <Icon
-              name="BookmarkIcon"
-              size={20}
-              variant={isSaved ? 'solid' : 'outline'}
-            />
+            <Icon name="BookmarkIcon" size={20} variant={isSaved ? 'solid' : 'outline'} />
           </button>
         </div>
 
@@ -142,13 +139,22 @@ export default function PostCard({ post, isLiked, isSaved, onLike, onSave }: Pos
           {post.likes > 0 && (
             <div className="flex items-center gap-1">
               <Icon name="HeartIcon" size={14} variant="solid" className="text-primary" />
-              <span className="text-xs text-muted-foreground font-500 tabular-nums">{post.likes}</span>
+              <span className="text-xs text-muted-foreground font-500 tabular-nums">
+                {post.likes}
+              </span>
             </div>
           )}
           {post.comments > 0 && (
             <div className="flex items-center gap-1">
-              <Icon name="ChatBubbleOvalLeftIcon" size={14} variant="solid" className="text-blue-400" />
-              <span className="text-xs text-muted-foreground font-500 tabular-nums">{post.comments}</span>
+              <Icon
+                name="ChatBubbleOvalLeftIcon"
+                size={14}
+                variant="solid"
+                className="text-blue-400"
+              />
+              <span className="text-xs text-muted-foreground font-500 tabular-nums">
+                {post.comments}
+              </span>
             </div>
           )}
         </div>

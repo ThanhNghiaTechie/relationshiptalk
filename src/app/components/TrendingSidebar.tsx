@@ -33,7 +33,9 @@ export default function TrendingSidebar() {
                 </span>
                 <span className="text-sm font-500 text-foreground">{topic?.label}</span>
               </div>
-              <span className="text-xs text-muted-foreground tabular-nums">{topic?.count?.toLocaleString()}</span>
+              <span className="text-xs text-muted-foreground tabular-nums">
+                {topic?.count?.toLocaleString()}
+              </span>
             </div>
           ))}
         </div>
@@ -45,7 +47,10 @@ export default function TrendingSidebar() {
           <h3 className="text-sm font-700 text-foreground">Experts Online Now</h3>
         </div>
         <div className="space-y-3">
-          {mockExperts?.filter((e) => e?.isOnline)?.slice(0, 3)?.map((expert) => (
+          {mockExperts
+            ?.filter((e) => e?.isOnline)
+            ?.slice(0, 3)
+            ?.map((expert) => (
               <div key={`sidebar-expert-${expert?.id}`} className="flex items-center gap-2.5">
                 <div className="relative flex-shrink-0">
                   <div className="w-9 h-9 rounded-full overflow-hidden bg-muted">

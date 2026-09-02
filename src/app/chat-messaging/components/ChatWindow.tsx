@@ -104,7 +104,12 @@ export default function ChatWindow({ conversation, onBack }: ChatWindowProps) {
       {/* Expert info banner */}
       {conversation.participant.role === 'Expert' && (
         <div className="expert-gradient border-b border-border px-4 py-2.5 flex items-center gap-3">
-          <Icon name="ShieldCheckIcon" size={16} variant="solid" className="text-purple-600 flex-shrink-0" />
+          <Icon
+            name="ShieldCheckIcon"
+            size={16}
+            variant="solid"
+            className="text-purple-600 flex-shrink-0"
+          />
           <div className="flex-1 min-w-0">
             <p className="text-xs font-600 text-purple-700">
               Verified Expert · {conversation.participant.specialization}
@@ -113,8 +118,15 @@ export default function ChatWindow({ conversation, onBack }: ChatWindowProps) {
               Responses within 2 hours · {conversation.participant.sessionRate}/session
             </p>
           </div>
-          <Icon name="StarIcon" size={14} variant="solid" className="text-amber-400 flex-shrink-0" />
-          <span className="text-xs font-700 text-foreground">{conversation.participant.rating}</span>
+          <Icon
+            name="StarIcon"
+            size={14}
+            variant="solid"
+            className="text-amber-400 flex-shrink-0"
+          />
+          <span className="text-xs font-700 text-foreground">
+            {conversation.participant.rating}
+          </span>
         </div>
       )}
 
@@ -129,9 +141,7 @@ export default function ChatWindow({ conversation, onBack }: ChatWindowProps) {
 
         {messages.map((msg, i) => {
           const isMe = msg.senderId === 'me';
-          const showAvatar =
-            !isMe &&
-            (i === 0 || messages[i - 1].senderId !== msg.senderId);
+          const showAvatar = !isMe && (i === 0 || messages[i - 1].senderId !== msg.senderId);
 
           return (
             <div
@@ -140,7 +150,9 @@ export default function ChatWindow({ conversation, onBack }: ChatWindowProps) {
             >
               {/* Avatar for received messages */}
               {!isMe && (
-                <div className={`w-7 h-7 rounded-full overflow-hidden bg-muted flex-shrink-0 ${showAvatar ? 'opacity-100' : 'opacity-0'}`}>
+                <div
+                  className={`w-7 h-7 rounded-full overflow-hidden bg-muted flex-shrink-0 ${showAvatar ? 'opacity-100' : 'opacity-0'}`}
+                >
                   <AppImage
                     src={conversation.participant.avatar}
                     alt={`${conversation.participant.name} message avatar`}
@@ -151,7 +163,9 @@ export default function ChatWindow({ conversation, onBack }: ChatWindowProps) {
                 </div>
               )}
 
-              <div className={`flex flex-col gap-0.5 max-w-[72%] ${isMe ? 'items-end' : 'items-start'}`}>
+              <div
+                className={`flex flex-col gap-0.5 max-w-[72%] ${isMe ? 'items-end' : 'items-start'}`}
+              >
                 {msg.image && (
                   <div className="w-48 h-36 rounded-xl overflow-hidden mb-1">
                     <AppImage
@@ -164,7 +178,9 @@ export default function ChatWindow({ conversation, onBack }: ChatWindowProps) {
                   </div>
                 )}
                 {msg.text && (
-                  <div className={`px-4 py-2.5 text-sm leading-relaxed ${isMe ? 'chat-bubble-sent' : 'chat-bubble-received'}`}>
+                  <div
+                    className={`px-4 py-2.5 text-sm leading-relaxed ${isMe ? 'chat-bubble-sent' : 'chat-bubble-received'}`}
+                  >
                     {msg.text}
                   </div>
                 )}
