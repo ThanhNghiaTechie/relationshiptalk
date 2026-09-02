@@ -1,11 +1,5 @@
-import React from 'react';
-import AppLayout from '@/components/AppLayout';
-import UserProfileContent from './components/UserProfileContent';
+import { redirect } from 'next/navigation';
 
 export default function UserProfilePage() {
-  return (
-    <AppLayout activeRoute="/user-profile">
-      <UserProfileContent />
-    </AppLayout>
-  );
+  redirect('/profile');
 }

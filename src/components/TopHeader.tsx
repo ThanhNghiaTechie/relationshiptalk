@@ -1,8 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import Link from 'next/link';
-
 import Icon from '@/components/ui/AppIcon';
+import AuthUserMenu from './AuthUserMenu';
 
 interface TopHeaderProps {
   activeRoute: string;
@@ -21,15 +20,7 @@ export default function TopHeader({ activeRoute }: TopHeaderProps) {
   return (
     <header className="sticky top-0 z-30 bg-card/95 backdrop-blur-sm border-b border-border px-3 py-2.5 sm:px-4 sm:py-3 flex items-center justify-between lg:hidden">
       {/* Left: avatar */}
-      <Link
-        href="/login"
-        className="profile-avatar-ring w-9 h-9 flex-shrink-0"
-        aria-label="Đăng nhập"
-      >
-        <div className="w-full h-full rounded-full bg-muted overflow-hidden flex items-center justify-center">
-          <Icon name="UserCircleIcon" size={28} variant="solid" className="text-muted-foreground" />
-        </div>
-      </Link>
+      <AuthUserMenu compact />
 
       {/* Center: title */}
       <h1 className="min-w-0 truncate px-2 text-sm font-800 tracking-widest text-foreground uppercase sm:text-base">

@@ -32,7 +32,7 @@ export default function LoginPage() {
       setIsLoading(false);
       return;
     }
-    window.location.assign('/');
+    window.location.assign('/dashboard');
   }
 
   async function handleGoogleLogin() {

@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   // Nếu chưa đăng nhập mà vào trang cần bảo vệ -> đá về /login
-  const protectedPaths = ['/dashboard'];
+  const protectedPaths = ['/dashboard', '/profile', '/user-profile'];
   const isProtected = protectedPaths.some((path) => request.nextUrl.pathname.startsWith(path));
 
   if (isProtected && !user) {
